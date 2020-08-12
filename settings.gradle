@@ -1,0 +1,2 @@
+rootProject.name = "Betak"
+include ':app'
