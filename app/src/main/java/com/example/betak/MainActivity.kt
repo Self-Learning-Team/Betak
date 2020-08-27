@@ -1,5 +1,6 @@
 package com.example.betak
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
@@ -10,17 +11,23 @@ import androidx.core.view.get
 import androidx.databinding.DataBindingUtil
 import androidx.viewpager2.widget.ViewPager2
 import com.example.betak.databinding.ActivityMainBinding
+import com.example.betak.model.entity.IntroSlide
+import com.example.betak.ui.activity.DashboardActivity
+import com.example.betak.ui.activity.ProfileActivity
+import com.example.betak.ui.activity.SignUpActivity
 import com.example.betak.ui.adapter.IntroSliderAdapter
+import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityMainBinding
 
     private val introSliderAdapter = IntroSliderAdapter(
+
             listOf(
-                    IntroSlide("ابحث عن عامل" , "اسهل طريقة للبحث عن شخص لانجاز اعمال منزلك السريعه" , R.drawable.img3)
-          ,                    IntroSlide("ابحث عن عمل " , "سجل بياناتك واحصل علي عمل في منطقتك" , R.drawable.img1)
-,                    IntroSlide("ريح دماغك " , " خليك في بيتك وصلح كل اللي عندك ....." , R.drawable.img2)
+                    IntroSlide("ابحث عن عامل", "اسهل طريقة للبحث عن شخص لانجاز اعمال منزلك السريعه", R.drawable.img3)
+          , IntroSlide("ابحث عن عمل ", "سجل بياناتك واحصل علي عمل في منطقتك", R.drawable.img1)
+, IntroSlide("ريح دماغك ", " خليك في بيتك وصلح كل اللي عندك .....", R.drawable.img2)
 
             )
     )
@@ -42,16 +49,26 @@ class MainActivity : AppCompatActivity() {
         })
         binding.btnNext.setOnClickListener {
 
-            if (binding.introSliderViewPager.currentItem + 1 < introSliderAdapter.itemCount){
-              binding.introSliderViewPager.currentItem += 1
+          /*  if (binding.introSliderViewPager.currentItem + 1 < introSliderAdapter.itemCount){
+              binding.introSliderViewPager.currentItem += 1 }*/
 
-            }else{
-         //startActivity
+            startActivity(Intent(this ,SignUpActivity::class.java))
+
             }
-        }
+
+
         binding.skip.setOnClickListener {
-         //startActivity
+         var intent =Intent(this , DashboardActivity::class.java)
+            intent.putExtra("in" , "no")
+            startActivity(intent)
         }
+
+      /*  if (FirebaseAuth.getInstance().currentUser!=null){
+           var intent = Intent(this , DashboardActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            startActivity(intent)
+        }*/
     }
 
     private fun setUpIndicators(){
@@ -91,5 +108,10 @@ class MainActivity : AppCompatActivity() {
                 )
             }
         }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+
     }
 }

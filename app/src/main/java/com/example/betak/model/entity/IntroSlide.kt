@@ -1,4 +1,4 @@
-package com.example.betak
+package com.example.betak.model.entity
 
 
 data  class IntroSlide(val title : String

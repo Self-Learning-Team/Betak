@@ -6,9 +6,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.betak.IntroSlide
+import com.example.betak.model.entity.IntroSlide
 import com.example.betak.R
-import kotlin.coroutines.coroutineContext
 
 class IntroSliderAdapter(private val introSliders : List<IntroSlide> ) : RecyclerView.Adapter<IntroSliderAdapter.IntroSliderViewHolder>(){
 
