@@ -23,9 +23,13 @@ companion object{
     var employeeRef = FirebaseFirestore.getInstance().collection("Employees")
 
 
-  public  fun setEmployeeInformation(id : String, name: String, job: String, phone: String, whatsApp: String, area: String, governator: String) {
+    fun setEmployeeInformation(id : String, name: String, job: String, phone: String,
+                                     whatsApp: String,
+                                     area: String,
+                                     governator: String,
+    image: String , online : Boolean) {
 
-        var employee = Employee(id , name, job, phone, whatsApp, governator, area)
+        val employee = Employee(id , name, job, phone, whatsApp, governator, area , image , online)
 
         GlobalScope.launch(Dispatchers.IO) {
             employeeRef.document(id).set(employee).await()

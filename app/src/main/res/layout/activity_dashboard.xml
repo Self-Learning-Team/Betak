@@ -36,7 +36,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="@+id/image_header"
                 />
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/img_profile"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
@@ -50,6 +50,32 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="18dp" />
 
+            <RelativeLayout
+                android:id="@+id/notifications"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="13dp"
+                android:layout_marginEnd="18dp"
+                android:padding="7dp"
+                android:orientation="vertical"
+                android:layout_width="60dp"
+                android:layout_height="60dp">
+
+                <ImageView
+                    android:id="@+id/cart_icon"
+                    android:layout_centerHorizontal="true"
+                    android:src="@drawable/ic_baseline_notifications_24"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <com.nex3z.notificationbadge.NotificationBadge
+                    app:nbMaxTextLength="2"
+                    android:id="@+id/notification_badge"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp">
+                </com.nex3z.notificationbadge.NotificationBadge>
+
+            </RelativeLayout>
             <TextView
                 android:id="@+id/text_welcome"
                 android:layout_width="match_parent"

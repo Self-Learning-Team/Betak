@@ -2,49 +2,83 @@
 <layout  xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
     <data>
         <variable
             name="viewModel"
             type="com.example.betak.model.viewModel.ProfileViewModel" />
     </data>
+
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.activity.ProfileActivity">
+    tools:context=".ui.activity.PublicProfileActivity">
+
+    <ImageView
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/img_back"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:rotation="180"
+        android:src="@drawable/ic_baseline_arrow_back_24"
+        android:contentDescription="Back" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/name"
+        app:civ_border_color="@color/primaryDarkColor"
+        app:civ_border_width="1dp"
         android:layout_marginTop="10dp"
         android:id="@+id/profile_img"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="90dp"
+        android:layout_height="100dp"
         android:layout_gravity="center_horizontal"
         android:src="@drawable/profile" />
+
     <TextView
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/profile_img"
         android:layout_marginTop="10dp"
-        android:textSize="18sp"
+        android:textSize="20sp"
+        android:textColor="@android:color/black"
+        android:fontFamily="serif-monospace"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:autoText="false"
-        android:text="Shaimaa"
+        android:text="@{viewModel.name}"
         android:id="@+id/name"/>
-
-    <androidx.appcompat.widget.AppCompatRatingBar
+    <TextView
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/name"
+        android:layout_marginTop="10dp"
+        android:textSize="20sp"
+        android:textColor="@android:color/black"
+        android:fontFamily="serif-monospace"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:autoText="false"
+        android:text="@{viewModel.address}"
+        android:id="@+id/location"/>
+    <RatingBar
         android:id="@+id/rating_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/name"
+        android:rating="3"
+        app:layout_constraintTop_toBottomOf="@+id/location"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:numStars="5"
         android:layout_marginTop="5dp"/>
-
     <LinearLayout
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -56,7 +90,7 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/card"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rating_bar"
@@ -67,16 +101,17 @@
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         app:strokeColor="@color/primaryDarkColor"
-        app:strokeWidth="2dp"
+        app:strokeWidth="1dp"
         android:layout_width="match_parent"
         android:layout_height="100dp">
     <LinearLayout
         android:layout_height="match_parent"
         android:layout_width="match_parent"
-        android:weightSum="3"
+        android:weightSum="2"
         android:orientation="horizontal">
 
         <Button
+            android:id="@+id/opinion"
             android:layout_marginEnd="5dp"
             android:layout_marginStart="5dp"
             android:padding="4dp"
@@ -87,11 +122,13 @@
             android:textColor="@android:color/black"
             android:layout_width="0dp"
             android:layout_weight="1"
+            android:fontFamily="serif-monospace"
             android:layout_height="wrap_content"
             android:background="@drawable/background_botton"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/profile_img" />
         <Button
+            android:id="@+id/rating"
             android:padding="4dp"
             android:layout_gravity="center"
             android:maxLines="1"
@@ -100,6 +137,7 @@
             android:text="تقييم"
             android:layout_width="0dp"
             android:layout_weight="1"
+            android:fontFamily="serif-monospace"
             android:layout_marginEnd="5dp"
             android:layout_marginStart="5dp"
             android:layout_height="wrap_content"
@@ -107,69 +145,52 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/profile_img" />
 
-        <Button
+     <!--   <Button
+            android:id="@+id/modify"
             android:layout_marginEnd="5dp"
             android:layout_marginStart="5dp"
             android:padding="4dp"
+            android:visibility="visible"
             android:layout_gravity="center"
             android:maxLines="1"
             android:textSize="14sp"
             android:textColor="@android:color/black"
             android:text="تعديل"
+            android:fontFamily="serif-monospace"
             android:layout_width="0dp"
             android:layout_weight="1"
+            android:shadowColor="@color/primaryDarkColor"
             android:layout_height="wrap_content"
             android:background="@drawable/background_botton"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/profile_img" />
+            app:layout_constraintTop_toBottomOf="@+id/profile_img" />-->
+
     </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
     <ScrollView
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:id="@+id/scrollView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/const_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-    <LinearLayout
-        android:orientation="horizontal"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <ImageView
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="20dp"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/ic_baseline_person_pin_24"
-            android:tint="@color/primaryDarkColor"
-            />
-        <TextView
-            android:layout_gravity="center_vertical"
-            android:textSize="20sp"
-            android:layout_marginStart="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{viewModel.name}"
-            />
-    </LinearLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="معلومات الأتصال"
+                android:textSize="18sp"
+                android:textColor="@android:color/darker_gray"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                />
+            <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/const_phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -178,7 +199,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -187,6 +208,7 @@
                     android:layout_marginStart="20dp"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
+                    android:tint="@color/primaryDarkColor"
                     android:src="@drawable/ic_baseline_phone_24"/>
                 <TextView
                     android:id="@+id/phone"
@@ -195,10 +217,12 @@
                     android:layout_marginStart="20dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="serif-monospace"
                     android:text="@{viewModel.phone}"
                     />
             </LinearLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/const_whatsapp"
                 android:layout_width="match_parent"
@@ -208,7 +232,7 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="15dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
@@ -223,15 +247,15 @@
                         android:layout_gravity="center_vertical"
                         android:textSize="20sp"
                         android:layout_marginStart="20dp"
+                        android:fontFamily="serif-monospace"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@{viewModel.whatsApp}"
                         />
                 </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
-
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/const_location"
+                android:id="@+id/message_me"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <LinearLayout
@@ -239,28 +263,32 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="15dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
+
                     <ImageView
+                        android:tint="@color/primaryDarkColor"
                         android:layout_gravity="center_vertical"
                         android:layout_marginStart="20dp"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:src="@drawable/ic_baseline_location_on_24"/>
+                        android:src="@drawable/ic_baseline_message_24" />
                     <TextView
-                        android:id="@+id/address"
+                        android:id="@+id/message"
                         android:layout_gravity="center_vertical"
                         android:textSize="20sp"
                         android:layout_marginStart="20dp"
+                        android:fontFamily="serif-monospace"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{viewModel.address}"
+                        android:text="مراسلتي وارسال عنوان المنزل"
                         />
-
                 </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
+
         </LinearLayout>
+
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

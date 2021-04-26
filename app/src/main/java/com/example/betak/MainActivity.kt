@@ -13,33 +13,33 @@ import androidx.viewpager2.widget.ViewPager2
 import com.example.betak.databinding.ActivityMainBinding
 import com.example.betak.model.entity.IntroSlide
 import com.example.betak.ui.activity.DashboardActivity
-import com.example.betak.ui.activity.ProfileActivity
 import com.example.betak.ui.activity.SignUpActivity
 import com.example.betak.ui.adapter.IntroSliderAdapter
 import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var binding : ActivityMainBinding
+    private lateinit var binding: ActivityMainBinding
 
     private val introSliderAdapter = IntroSliderAdapter(
 
-            listOf(
-                    IntroSlide("ابحث عن عامل", "اسهل طريقة للبحث عن شخص لانجاز اعمال منزلك السريعه", R.drawable.img3)
-          , IntroSlide("ابحث عن عمل ", "سجل بياناتك واحصل علي عمل في منطقتك", R.drawable.img1)
-, IntroSlide("ريح دماغك ", " خليك في بيتك وصلح كل اللي عندك .....", R.drawable.img2)
-
-            )
+        listOf(
+              IntroSlide("ابحث عن عامل", "اسهل طريقة للبحث عن شخص لانجاز اعمال منزلك السريعه", R.drawable.img3)
+            , IntroSlide("ابحث عن عمل ", "سجل بياناتك واحصل علي عمل في منطقتك", R.drawable.img1)
+            , IntroSlide("ريح دماغك ", " خليك في بيتك وصلح كل اللي عندك .....", R.drawable.img2)
+        )
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
        binding = DataBindingUtil.setContentView(this , R.layout.activity_main)
 
         binding.introSliderViewPager.adapter = introSliderAdapter
 
         setUpIndicators()
         setCurrentIndicator(0)
+
         binding.introSliderViewPager.registerOnPageChangeCallback(object :
             ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
@@ -57,18 +57,12 @@ class MainActivity : AppCompatActivity() {
             }
 
 
-        binding.skip.setOnClickListener {
-         var intent =Intent(this , DashboardActivity::class.java)
-            intent.putExtra("in" , "no")
-            startActivity(intent)
-        }
-
-      /*  if (FirebaseAuth.getInstance().currentUser!=null){
+        if (FirebaseAuth.getInstance().currentUser!=null){
            var intent = Intent(this , DashboardActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
             startActivity(intent)
-        }*/
+        }
     }
 
     private fun setUpIndicators(){

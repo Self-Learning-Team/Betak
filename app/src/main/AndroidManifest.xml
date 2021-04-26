@@ -3,6 +3,10 @@
     package="com.example.betak">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
 
     <application
         android:allowBackup="true"
@@ -11,20 +15,46 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Betak">
-        <activity android:name=".ui.activity.EmFilterActivity"></activity>
+        <activity android:name=".ui.activity.NotificationActivity"></activity>
+        <activity android:name=".ui.activity.ChatActivity" />
+        <activity
+            android:name=".ui.activity.MeProfileActivity"
+            android:label="@string/title_activity_me_profile"
+            android:theme="@style/Theme.Betak.NoActionBar" />
+        <activity android:name=".ui.activity.ModifyActivity" />
+        <activity android:name=".ui.activity.EmFilterActivity" />
         <activity android:name=".ui.activity.EmloyeesActivity" />
         <activity android:name=".ui.activity.EnterCodeActivity" />
         <activity android:name=".ui.activity.FilterActivity" />
-        <activity android:name=".ui.activity.ProfileActivity" />
+        <activity android:name=".ui.activity.PublicProfileActivity" />
         <activity android:name=".ui.activity.DashboardActivity">
+        </activity>
+
+        <receiver
+            android:name=".model.utils.SmsBroadcastReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+            </intent-filter>
+        </receiver>
+
+        <service android:name=".model.fcm.FcmService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <activity android:name=".ui.activity.SignUpActivity" />
+
+        <activity android:name=".MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activity.SignUpActivity" />
-        <activity android:name=".MainActivity"></activity>
+
     </application>
 
 </manifest>

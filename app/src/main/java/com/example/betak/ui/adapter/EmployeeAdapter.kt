@@ -24,7 +24,7 @@ class EmployeeAdapter(private val onClickListener: OnClickListner) : ListAdapter
 
 
     override fun onBindViewHolder(holder: EmployeeAdapter.viewHolder, position: Int) {
-      var item = getItem(position)
+        val item = getItem(position)
         holder.bind(item)
 
         holder.itemView.setOnClickListener {

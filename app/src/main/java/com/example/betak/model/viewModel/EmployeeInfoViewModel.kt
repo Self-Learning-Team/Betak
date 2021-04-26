@@ -23,11 +23,11 @@ class EmployeeInfoViewModel(application: Application) : BaseViewModel(applicatio
 
     var _filter= MutableLiveData<List<Employee>>()
     val filter : LiveData<List<Employee>>
-        get()= _filter
+    get()= _filter
 
 
-    fun setEmployeeInfo(id : String , name: String, job: String, phone: String, whatsApp: String, area: String, governator: String){
-       EmployeeInfoRepo.instance.setEmployeeInformation(id , name , job, phone, whatsApp, area, governator)
+    fun setEmployeeInfo(id : String , name: String, job: String, phone: String, whatsApp: String, area: String, governator: String , image: String , online : Boolean){
+       EmployeeInfoRepo.instance.setEmployeeInformation(id , name , job, phone, whatsApp, area, governator , image , online)
     }
 
 

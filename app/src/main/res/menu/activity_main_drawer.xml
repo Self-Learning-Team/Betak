@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/address"
+            android:title="العنوان"
+            android:icon="@drawable/ic_baseline_location_on_24"/>
+
+        <item
+            android:icon="@android:drawable/ic_menu_search"
+            android:title="البحث"
+            android:id="@+id/search"/>
+
+    </group>
+
+    <item android:title="عام">
+
+        <menu>
+            <item
+                android:id="@+id/logout"
+                android:icon="@drawable/ic_baseline_exit_to_app_24"
+                android:title="تسجيل الخروج" />
+
+            <item
+                android:id="@+id/delete"
+                android:icon="@drawable/ic_baseline_delete_forever_24"
+                android:title= "ازالة الحساب"/>
+        </menu>
+
+
+    </item>
+</menu>

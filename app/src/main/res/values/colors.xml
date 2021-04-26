@@ -9,4 +9,8 @@
     <color name="primaryTextColor">#000000</color>
     <color name="secondaryTextColor">#000000</color>
     <color name="colorSemiDark">#90000000</color>
+    <color name="colorRating">#FFEB3B</color>
+
+    <color name="actionbar_opacity">#00000000</color>
+
 </resources>

@@ -29,8 +29,12 @@ class FilterActivity : AppCompatActivity() {
 
         setUpSpinners()
 
+      binding.imgBack.setOnClickListener {
+          finish()
+      }
+
         binding.btnSearch.setOnClickListener {
-            var intent = Intent(this , EmFilterActivity::class.java)
+            val intent = Intent(this , EmFilterActivity::class.java)
 
             intent.putExtra("job" , job)
             intent.putExtra("area" , area)

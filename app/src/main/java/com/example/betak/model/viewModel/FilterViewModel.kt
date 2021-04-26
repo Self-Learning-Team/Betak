@@ -15,7 +15,7 @@ class FilterViewModel : ViewModel() {
 
     var _empoloyees = MutableLiveData<List<Employee>>()
     val employees : LiveData<List<Employee>>
-        get()= _empoloyees
+    get()= _empoloyees
 
     var employeeRef = FirebaseFirestore.getInstance().collection("Employees")
 

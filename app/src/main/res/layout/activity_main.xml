@@ -8,36 +8,41 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/skip"
-        android:layout_width="wrap_content"
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="البحث عن عامل "
-        android:textColor="@color/primaryDarkColor"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginBottom="70dp" />
-
-    <com.google.android.material.button.MaterialButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="تسجيل الدخول للبحث عن عمل"
-        app:backgroundTint="@color/primaryDarkColor"
-        android:maxLines="1"
-        android:layout_marginBottom="20dp"
+        android:id="@+id/btn_next"
+        app:cardElevation="8dp"
+        app:strokeColor="@color/primaryLightColor"
+        app:strokeWidth="2dp"
+        app:cardCornerRadius="16dp"
+        app:cardBackgroundColor="@color/primaryDarkColor"
+        android:layout_marginBottom="40dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/skip"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        android:id="@+id/btn_next" />
+        app:layout_constraintBottom_toBottomOf="parent">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/sign_up"
+            android:gravity="center"
+            android:textSize="14sp"
+            android:textColor="@android:color/white"
+            android:padding="15dp"
+            android:textStyle="bold"
+            android:fontFamily="serif"
+            app:backgroundTint="@color/primaryDarkColor"
+            android:maxLines="1"/>
+
+    </com.google.android.material.card.MaterialCardView>
     <LinearLayout
         android:id="@+id/indicators_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp"
+        android:layout_marginBottom="50dp"
         android:orientation="horizontal"
         android:gravity="center"
         app:layout_constraintBottom_toTopOf="@+id/btn_next"/>
@@ -47,6 +52,8 @@
         android:overScrollMode="never"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/indicators_container"
         android:layout_marginBottom="12dp"
