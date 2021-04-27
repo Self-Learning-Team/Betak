@@ -10,6 +10,7 @@
     <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
+        android:id="@+id/back_item"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:background="@color/primaryLightColor"
@@ -32,25 +33,24 @@
         android:layout_height="wrap_content"
         android:layout_toEndOf="@+id/noti_img"
         android:text="helloejee"
+        android:padding="8dp"
         android:textSize="20sp"
         android:gravity="center_vertical"
-        android:textColor="@color/colorSemiDark"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"/>
+        android:textColor="@android:color/black" />
 
     <TextView
         android:id="@+id/noti_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toEndOf="@+id/noti_img"
+        android:padding="8dp"
         android:layout_below="@id/noti_txt"
         android:layout_marginTop="2dp"
         android:text="befor 20min"
         android:textSize="14sp"
         android:gravity="center_vertical"
-        android:textColor="@color/colorSemiDark"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"/>
+        android:layout_alignParentEnd="true"
+        android:textColor="@color/colorSemiDark" />
     </RelativeLayout>
 </layout>
 

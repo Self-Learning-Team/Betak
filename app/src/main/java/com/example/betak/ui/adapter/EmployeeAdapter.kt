@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.betak.databinding.EmployeeItemBinding
 import com.example.betak.model.entity.Employee
+import com.example.betak.model.entity.Noti
 
 class EmployeeAdapter(private val onClickListener: OnClickListner) : ListAdapter<Employee , EmployeeAdapter.viewHolder>(DiffCallback){
 
@@ -44,6 +45,6 @@ class EmployeeAdapter(private val onClickListener: OnClickListner) : ListAdapter
     }
 
     class OnClickListner(val clickListner: (employee : Employee ) -> Unit) {
-        fun onClick(employee: Employee ) = clickListner(employee)
+        fun onClick(employee: Employee) = clickListner(employee)
     }
 }

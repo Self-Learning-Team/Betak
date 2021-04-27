@@ -62,6 +62,7 @@ class ChatActivity : AppCompatActivity() {
         GlobalScope.launch {
             viewModel.getAllMessages(id)
             viewModel.getCurrentUserInfo(id)
+            viewModel2.getNotification(uid)
         }
 
         viewModel.employee.observe(this , Observer {
@@ -140,16 +141,27 @@ class ChatActivity : AppCompatActivity() {
     override fun onPause() {
         viewModel.onlineUser(uid , false)
         super.onPause()
+        GlobalScope.launch {
+            viewModel2.getNotification(uid)
+
+        }
     }
 
     override fun onStop() {
         viewModel.onlineUser(uid , false)
+        GlobalScope.launch {
+            viewModel2.getNotification(uid)
 
+        }
         super.onStop()
     }
 
     override fun onDestroy() {
         viewModel.onlineUser(uid , false)
+        GlobalScope.launch {
+            viewModel2.getNotification(uid)
+
+        }
         super.onDestroy()
     }
 }

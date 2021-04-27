@@ -57,9 +57,9 @@ class ChatViewModel : ViewModel() {
 
 
     suspend fun addNewMessage(
-        senderId: String, receiverId: String
-        , sender: String, receiver: String,
-        message: String, timestamp: Timestamp
+            senderId: String, receiverId: String
+            , sender: String, receiver: String,
+            message: String, timestamp: Timestamp
     ) {
         var sendTo = Employee()
         var currentUser = Employee()
@@ -77,12 +77,12 @@ class ChatViewModel : ViewModel() {
         }
 
         withContext(Dispatchers.IO) {
-            try{
+            try {
                 val ref = tokenRef.document(receiverId).get().await()
                 token = ref.toObject(MyToken::class.java)!!
                 Log.e("cor success", "success")
 
-            }catch (e : Exception){
+            } catch (e: Exception) {
                 Log.e("cor error", e.message.toString())
 
             }
@@ -102,45 +102,46 @@ class ChatViewModel : ViewModel() {
                     }
         }
 
-
         if (sendTo.getOnline() == false) {
-
-        saveNotification(receiverId, currentTime, sendTo, currentUser, senderId, message, token)
+            saveNotification(receiverId, currentTime, sendTo, currentUser, senderId, message, token)
         }
 
     }
 
 
-        suspend fun saveNotification(
-        receiverId: String,
-        currentTime: Long,
-        sendTo: Employee,
-        curretUser: Employee,
-        senderId: String,
-        message: String,
-        token : MyToken
+    suspend fun saveNotification(
+            receiverId: String,
+            currentTime: Long,
+            sendTo: Employee,
+            curretUser: Employee,
+            senderId: String,
+            message: String,
+            token: MyToken
     ) {
-        val mes_noti = Noti(curretUser.getImagePath(), curretUser.getName()!!, currentTime, message)
+        val mes_noti = Noti(curretUser.getImagePath(),
+                curretUser.getName()!!, currentTime, message, senderId, false)
 
-            notiRef.document(receiverId).collection("noti")
-                .document().set(mes_noti).addOnSuccessListener {
+        notiRef.document(receiverId).collection("noti")
+                .document(currentTime.toString()).set(mes_noti).addOnSuccessListener {
                     Log.e("success noti", "success")
                 }.addOnFailureListener {
                     Log.e("fail noti", it.message.toString())
                 }
 
-        val map = mapOf("title" to curretUser.getName()!! , "content" to message)
 
-        val fcmSendData = FcmSendData( token.getToken()!! , map  )
+        val map = mapOf("title" to curretUser.getName()!!, "content" to message)
 
-            apiInterface.sendNotification(fcmSendData).enqueue(object: Callback<FcmResponse> {
-                override fun onFailure(call: Call<FcmResponse>, t: Throwable) {
-                    Log.e("error fcm" , t.message.toString())
-                }
-                override fun onResponse(call: Call<FcmResponse>, response: Response<FcmResponse>) {
-                    Log.e("success fcm" , response.body().toString())
-                }
-            })
+        val fcmSendData = FcmSendData(token.getToken()!!, map)
+
+        apiInterface.sendNotification(fcmSendData).enqueue(object : Callback<FcmResponse> {
+            override fun onFailure(call: Call<FcmResponse>, t: Throwable) {
+                Log.e("error fcm", t.message.toString())
+            }
+
+            override fun onResponse(call: Call<FcmResponse>, response: Response<FcmResponse>) {
+                Log.e("success fcm", response.body().toString())
+            }
+        })
     }
 
 

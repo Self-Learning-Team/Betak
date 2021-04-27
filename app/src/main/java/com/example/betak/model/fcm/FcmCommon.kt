@@ -1,5 +1,6 @@
 package com.example.betak.model.fcm
 
+import android.annotation.SuppressLint
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -27,6 +28,7 @@ object FcmCommon {
     val CONTENT_KEY = "content"
     
 
+    @SuppressLint("ObsoleteSdkInt")
     fun showNotification(
         context: Context
         , noti_id: Int, title: String?, content: String?, intent: Intent?
@@ -58,13 +60,14 @@ object FcmCommon {
             builder.setContentTitle(title)
                 .setContentText(content)
                 .setAutoCancel(true)
-                .setSmallIcon(R.mipmap.ic_launcher)
+                .setSmallIcon(R.mipmap.employee)
                 .setLargeIcon(
                     BitmapFactory.decodeResource(
                         context.getResources(),
-                        R.mipmap.ic_launcher
+                        R.mipmap.employee
                     )
-                )
+                ).setDefaults(Notification.DEFAULT_VIBRATE)
+                  .setDefaults(Notification.DEFAULT_SOUND)
             if (pendingIntent != null) builder.setContentIntent(pendingIntent)
             val mNotification: Notification = builder.build()
             notificationManager.notify(noti_id, mNotification)

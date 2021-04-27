@@ -1,6 +1,8 @@
 package com.example.betak.ui.activity
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -31,14 +33,17 @@ class DashboardActivity : AppCompatActivity() {
     private lateinit var mAuth: FirebaseAuth
     private lateinit var viewModel: DashboardViewModel
 
+
     override fun onStart() {
         super.onStart()
         GlobalScope.launch {
-            viewModel.getNotification(id)
             viewModel.getCurrentUserInfo(id)
+            viewModel.getNotification(id)
+            viewModel.getNonOpenNotification(id)
+
         }
 
-        viewModel.employee.observe(this , Observer {
+        viewModel.employee.observe(this, Observer {
             binding.textWelcome.text = getGreetingMessage() + " " + it.getName()
 
             Glide.with(this)
@@ -47,10 +52,9 @@ class DashboardActivity : AppCompatActivity() {
                     .placeholder(R.drawable.profile)
                     .into(binding.imgProfile)
         })
-        viewModel.notes.observe(this , Observer {
-            binding.notificationBadge.setNumber(it.size)
+        viewModel.open.observe(this, Observer {
             val size = it.size
-            binding.notificationBadge.setText(size.toString() , true)
+            binding.notificationBadge.setText(size.toString(), true)
 
         })
     }
@@ -58,11 +62,13 @@ class DashboardActivity : AppCompatActivity() {
     override fun onRestart() {
         super.onRestart()
         GlobalScope.launch {
-            viewModel.getNotification(id)
             viewModel.getCurrentUserInfo(id)
+            viewModel.getNotification(id)
+            viewModel.getNonOpenNotification(id)
+
         }
 
-        viewModel.employee.observe(this , Observer {
+        viewModel.employee.observe(this, Observer {
             binding.textWelcome.text = getGreetingMessage() + " " + it.getName()
 
             Glide.with(this)
@@ -71,98 +77,65 @@ class DashboardActivity : AppCompatActivity() {
                     .placeholder(R.drawable.profile)
                     .into(binding.imgProfile)
         })
-        viewModel.notes.observe(this , Observer {
-            binding.notificationBadge.setNumber(it.size)
+        viewModel.open.observe(this, Observer {
             val size = it.size
-            binding.notificationBadge.setText(size.toString() , true)
+            binding.notificationBadge.setText(size.toString(), true)
 
         })
     }
 
-    override fun onResume() {
-        super.onResume()
-        GlobalScope.launch {
-            viewModel.getNotification(id)
-            viewModel.getCurrentUserInfo(id)
-        }
-
-        viewModel.employee.observe(this , Observer {
-            binding.textWelcome.text = getGreetingMessage() + " " + it.getName()
-
-            Glide.with(this)
-                    .load(it.getImagePath())
-                    .centerCrop()
-                    .placeholder(R.drawable.profile)
-                    .into(binding.imgProfile)
-        })
-        viewModel.notes.observe(this , Observer {
-            binding.notificationBadge.setNumber(it.size)
-            val size = it.size
-            binding.notificationBadge.setText(size.toString() , true)
-
-        })
-    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_dashboard)
-
         mAuth = FirebaseAuth.getInstance()
         id = mAuth.currentUser!!.uid
 
-        viewModel= ViewModelProviders.of(this).get(DashboardViewModel::class.java)
+        viewModel = ViewModelProviders.of(this).get(DashboardViewModel::class.java)
+        FirebaseInstanceId.getInstance()
+                .instanceId.addOnSuccessListener { instanceIdResult ->
+                    FcmCommon.updateToken(instanceIdResult.token)
+                    Log.e("my token", instanceIdResult.token)
 
-                FirebaseInstanceId.getInstance()
-                          .instanceId.addOnSuccessListener { instanceIdResult ->
-                          FcmCommon.updateToken(instanceIdResult.token)
-                          Log.e("my token", instanceIdResult.token)
-
-                      }.addOnFailureListener {
-                          Log.e("error token", it.message.toString())
-                      }
-
+                }.addOnFailureListener {
+                    Log.e("error token", it.message.toString())
+                }
 
         GlobalScope.launch {
-         viewModel.getNotification(id)
-         viewModel.getCurrentUserInfo(id)
+            viewModel.getNotification(id)
+            viewModel.getCurrentUserInfo(id)
+            viewModel.getNonOpenNotification(id)
         }
 
-        viewModel.employee.observe(this , Observer {
-         binding.textWelcome.text = getGreetingMessage() + " " + it.getName()
-
+        viewModel.employee.observe(this, Observer {
+            binding.textWelcome.text = getGreetingMessage() + " " + it.getName()
             Glide.with(this)
-                .load(it.getImagePath())
-                .centerCrop()
-                .placeholder(R.drawable.profile)
-                .into(binding.imgProfile)
-        })
-        viewModel.notes.observe(this , Observer {
-            binding.notificationBadge.setNumber(it.size)
-            val size = it.size
-            binding.notificationBadge.setText(size.toString() , true)
-
+                    .load(it.getImagePath())
+                    .centerCrop()
+                    .placeholder(R.drawable.profile)
+                    .into(binding.imgProfile)
         })
 
         binding.notifications.setOnClickListener {
-         GlobalScope.launch {
-             viewModel.delete(id)
-             viewModel.getNotification(id)
-         }
-        }
 
-
-
-        binding.notifications.setOnClickListener {
             val intent = Intent(this, NotificationActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             startActivity(intent)
         }
 
+        viewModel.open.observe(this, Observer {
+            val size = it.size
+            Log.e("shaima", "temp size is" + size.toString())
+          //  binding.notificationBadge.setText(size.toString(), true)
+            binding.notificationBadge.setNumber(size , true)
+
+
+        })
         binding.imgProfile.setOnClickListener {
 
             val intent = Intent(this, MeProfileActivity::class.java)
-            intent.putExtra("id" , id)
+            intent.putExtra("id", id)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             startActivity(intent)
@@ -275,7 +248,7 @@ class DashboardActivity : AppCompatActivity() {
 
     }
 
-    fun getGreetingMessage():String{
+    fun getGreetingMessage(): String {
         val c = Calendar.getInstance()
         val timeOfDay = c.get(Calendar.HOUR_OF_DAY)
 

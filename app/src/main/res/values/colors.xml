@@ -10,6 +10,7 @@
     <color name="secondaryTextColor">#000000</color>
     <color name="colorSemiDark">#90000000</color>
     <color name="colorRating">#FFEB3B</color>
+    <color name="colorClick">#66BCFFC5</color>
 
     <color name="actionbar_opacity">#00000000</color>
 

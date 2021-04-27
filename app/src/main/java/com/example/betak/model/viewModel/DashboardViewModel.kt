@@ -23,6 +23,10 @@ class DashboardViewModel : ViewModel() {
     val notes: LiveData<List<Noti>>
     get() = _notes
 
+    var _open = MutableLiveData<List<Noti>>()
+    val open: LiveData<List<Noti>>
+        get() = _open
+
     var _empoloyee = MutableLiveData<Employee>()
     val employee: LiveData<Employee>
         get() = _empoloyee
@@ -58,12 +62,21 @@ class DashboardViewModel : ViewModel() {
         }
     }
 
-    fun delete(id : String){
-     GlobalScope.launch {
-     notiRef.document(id).delete()
-    }
-    }
+    suspend fun getNonOpenNotification(id : String ){
+        Log.e("shaima" , "start get notes ")
 
+        val arrayList : ArrayList<Noti> = ArrayList()
 
+        withContext(Dispatchers.IO){
+            val notes = notiRef.document(id).collection("noti")
+            notes.get().await().forEach {
+                val note = it.toObject(Noti::class.java)
+                if(note.getOpen()==false)  arrayList.add(note)
+            }
+        }
+        withContext(Dispatchers.Main){
+            _open.value = arrayList
+        }
+    }
 
 }
