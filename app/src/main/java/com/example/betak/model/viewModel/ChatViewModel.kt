@@ -1,6 +1,5 @@
 package com.example.betak.model.viewModel
 
-import android.media.MediaCodec
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -19,12 +18,15 @@ import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.*
 import kotlinx.coroutines.tasks.await
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import java.time.Duration
 import java.util.concurrent.Executors
 
 
 class ChatViewModel : ViewModel() {
 
-    private val monoThreadDispatcher = Executors.newFixedThreadPool(1).asCoroutineDispatcher()
 
     private val TAG = "ChatViewModel"
     private val currentTime = System.currentTimeMillis()
@@ -71,30 +73,45 @@ class ChatViewModel : ViewModel() {
         withContext(Dispatchers.IO) {
             val ref = employeeRef.document(senderId).get().await()
             currentUser = ref.toObject(Employee::class.java)!!
+
         }
 
+        withContext(Dispatchers.IO) {
+            try{
+                val ref = tokenRef.document(receiverId).get().await()
+                token = ref.toObject(MyToken::class.java)!!
+                Log.e("cor success", "success")
+
+            }catch (e : Exception){
+                Log.e("cor error", e.message.toString())
+
+            }
+        }
         GlobalScope.launch {
             val chat = Chat(
-                sender, senderId, receiverId, receiver, message,
-                timestamp
+                    sender, senderId, receiverId, receiver, message,
+                    timestamp
             )
 
             messageRef.document(receiverId).collection("chat").document()
-                .set(chat).addOnSuccessListener {
+                    .set(chat).addOnSuccessListener {
+                        Log.e(TAG, "success add message ")
 
-                }.addOnFailureListener {
-                    Log.e(TAG, it.message.toString())
-                }
+                    }.addOnFailureListener {
+                        Log.e(TAG, it.message.toString())
+                    }
         }
 
+
         if (sendTo.getOnline() == false) {
+
         saveNotification(receiverId, currentTime, sendTo, currentUser, senderId, message, token)
         }
 
     }
 
 
-    private fun saveNotification(
+        suspend fun saveNotification(
         receiverId: String,
         currentTime: Long,
         sendTo: Employee,
@@ -104,15 +121,28 @@ class ChatViewModel : ViewModel() {
         token : MyToken
     ) {
         val mes_noti = Noti(curretUser.getImagePath(), curretUser.getName()!!, currentTime, message)
-        val sender = Employee()
 
             notiRef.document(receiverId).collection("noti")
                 .document().set(mes_noti).addOnSuccessListener {
-                    Log.e(TAG, "success")
+                    Log.e("success noti", "success")
                 }.addOnFailureListener {
-                    Log.e(TAG, it.message.toString())
+                    Log.e("fail noti", it.message.toString())
                 }
+
+        val map = mapOf("title" to curretUser.getName()!! , "content" to message)
+
+        val fcmSendData = FcmSendData( token.getToken()!! , map  )
+
+            apiInterface.sendNotification(fcmSendData).enqueue(object: Callback<FcmResponse> {
+                override fun onFailure(call: Call<FcmResponse>, t: Throwable) {
+                    Log.e("error fcm" , t.message.toString())
+                }
+                override fun onResponse(call: Call<FcmResponse>, response: Response<FcmResponse>) {
+                    Log.e("success fcm" , response.body().toString())
+                }
+            })
     }
+
 
     suspend fun getCurrentUserInfo(id: String) {
         var current: Employee = Employee()

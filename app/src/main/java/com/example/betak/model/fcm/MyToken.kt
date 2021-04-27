@@ -1,7 +1,9 @@
 package com.example.betak.model.fcm
 
+import java.io.Serializable
 
-class MyToken() {
+
+class MyToken(): Serializable{
 
      private var token: String? = null
 
@@ -10,8 +12,8 @@ class MyToken() {
     }
 
 
-    fun getToken(): String {
-        return token!!
+    fun getToken(): String? {
+        return token
     }
 
     fun setToken(token: String) {

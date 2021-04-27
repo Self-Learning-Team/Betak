@@ -10,7 +10,7 @@ class FcmSendData() {
         this.data = data
     }
 
-    fun getData(): Map<String , String>  {
+    fun getData(): Map<String , String>?  {
         return data!!
     }
 
@@ -18,7 +18,7 @@ class FcmSendData() {
         this.data  = data
     }
 
-    fun getTo(): String {
+    fun getTo(): String? {
         return to!!
     }
 

@@ -2,8 +2,8 @@ package com.example.betak.model.fcm
 
 class FcmResponse {
 
-     var canonical_id: String? = null
-     var results: List<Result>? =null
+    private var canonical_id: String? = null
+    private var results: List<Result>? =null
 
      constructor(canonical_id: String, results: List<Result>) {
         this.canonical_id = canonical_id
