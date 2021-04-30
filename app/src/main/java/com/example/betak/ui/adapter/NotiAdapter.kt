@@ -16,12 +16,16 @@ import com.bumptech.glide.Glide
 import com.example.betak.R
 import com.example.betak.model.entity.Employee
 import com.example.betak.model.entity.Noti
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import de.hdodenhof.circleimageview.CircleImageView
 
 class NotiAdapter (var listNotes : List<Noti> , private var context : Context , private val onClickListener: NotiAdapter.OnClickListner): ListAdapter<Noti, NotiAdapter.viewHolder>(DiffCallback) {
 
     var notiRef = FirebaseFirestore.getInstance().collection("Notifications")
+
+    var mAuth = FirebaseAuth.getInstance()
+    var uid = mAuth.currentUser!!.uid
 
     class viewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
 
@@ -72,7 +76,7 @@ class NotiAdapter (var listNotes : List<Noti> , private var context : Context , 
             onClickListener.onClick(item)
 
             val update = mapOf("open" to true)
-            notiRef.document(item.senderId!!).collection("noti")
+            notiRef.document(uid).collection("noti")
                     .document(item.time.toString()).update(update).addOnSuccessListener {
                         Log.e("success update noti", "success")
                     }.addOnFailureListener {

@@ -1,24 +1,17 @@
 package com.example.betak.ui.activity
 
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
-import com.example.betak.MainActivity
 import com.example.betak.R
 import com.example.betak.databinding.ActivityDashboardBinding
 import com.example.betak.model.fcm.FcmCommon
 import com.example.betak.model.viewModel.DashboardViewModel
-import com.example.betak.model.viewModel.EmployeeInfoViewModel
-import com.example.betak.model.viewModel.viewModelFactory
-import com.google.android.gms.common.internal.service.Common
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.iid.FirebaseInstanceId
 import kotlinx.coroutines.GlobalScope
@@ -34,56 +27,6 @@ class DashboardActivity : AppCompatActivity() {
     private lateinit var viewModel: DashboardViewModel
 
 
-    override fun onStart() {
-        super.onStart()
-        GlobalScope.launch {
-            viewModel.getCurrentUserInfo(id)
-            viewModel.getNotification(id)
-            viewModel.getNonOpenNotification(id)
-
-        }
-
-        viewModel.employee.observe(this, Observer {
-            binding.textWelcome.text = getGreetingMessage() + " " + it.getName()
-
-            Glide.with(this)
-                    .load(it.getImagePath())
-                    .centerCrop()
-                    .placeholder(R.drawable.profile)
-                    .into(binding.imgProfile)
-        })
-        viewModel.open.observe(this, Observer {
-            val size = it.size
-            binding.notificationBadge.setText(size.toString(), true)
-
-        })
-    }
-
-    override fun onRestart() {
-        super.onRestart()
-        GlobalScope.launch {
-            viewModel.getCurrentUserInfo(id)
-            viewModel.getNotification(id)
-            viewModel.getNonOpenNotification(id)
-
-        }
-
-        viewModel.employee.observe(this, Observer {
-            binding.textWelcome.text = getGreetingMessage() + " " + it.getName()
-
-            Glide.with(this)
-                    .load(it.getImagePath())
-                    .centerCrop()
-                    .placeholder(R.drawable.profile)
-                    .into(binding.imgProfile)
-        })
-        viewModel.open.observe(this, Observer {
-            val size = it.size
-            binding.notificationBadge.setText(size.toString(), true)
-
-        })
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -92,46 +35,29 @@ class DashboardActivity : AppCompatActivity() {
         id = mAuth.currentUser!!.uid
 
         viewModel = ViewModelProviders.of(this).get(DashboardViewModel::class.java)
-        FirebaseInstanceId.getInstance()
-                .instanceId.addOnSuccessListener { instanceIdResult ->
-                    FcmCommon.updateToken(instanceIdResult.token)
-                    Log.e("my token", instanceIdResult.token)
 
-                }.addOnFailureListener {
-                    Log.e("error token", it.message.toString())
-                }
-
-        GlobalScope.launch {
-            viewModel.getNotification(id)
-            viewModel.getCurrentUserInfo(id)
-            viewModel.getNonOpenNotification(id)
+        if(id!=null){
+            FirebaseInstanceId.getInstance().instanceId.addOnSuccessListener { instanceIdResult ->
+                        FcmCommon.updateToken(instanceIdResult.token)
+                        Log.e("my token", instanceIdResult.token)
+                    }.addOnFailureListener {
+                        Log.e("error token", it.message.toString())
+                    }
         }
 
-        viewModel.employee.observe(this, Observer {
-            binding.textWelcome.text = getGreetingMessage() + " " + it.getName()
-            Glide.with(this)
-                    .load(it.getImagePath())
-                    .centerCrop()
-                    .placeholder(R.drawable.profile)
-                    .into(binding.imgProfile)
-        })
+
+        //update ui
+        updateUi()
+        viewModel.onAppUser(id , true)
 
         binding.notifications.setOnClickListener {
-
             val intent = Intent(this, NotificationActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             startActivity(intent)
         }
 
-        viewModel.open.observe(this, Observer {
-            val size = it.size
-            Log.e("shaima", "temp size is" + size.toString())
-          //  binding.notificationBadge.setText(size.toString(), true)
-            binding.notificationBadge.setNumber(size , true)
 
-
-        })
         binding.imgProfile.setOnClickListener {
 
             val intent = Intent(this, MeProfileActivity::class.java)
@@ -258,4 +184,51 @@ class DashboardActivity : AppCompatActivity() {
             else -> "Hello"
         }
     }
+
+    fun updateUi() {
+        GlobalScope.launch {
+            viewModel.getNotification(id)
+            viewModel.getCurrentUserInfo(id)
+            viewModel.getNonOpenNotification(id)
+        }
+
+        viewModel.employee.observe(this, Observer {
+            binding.textWelcome.text = getGreetingMessage() + " " + it.getName()
+            Glide.with(this)
+                    .load(it.getImagePath())
+                    .centerCrop()
+                    .placeholder(R.drawable.profile)
+                    .into(binding.imgProfile)
+        })
+        viewModel.open.observe(this, Observer {
+            val size = it.size
+            Log.e("shaima", "temp size is" + size.toString())
+            //  binding.notificationBadge.setText(size.toString(), true)
+            binding.notificationBadge.setNumber(size, true)
+
+
+        })
+    }
+
+    override fun onStart() {
+        super.onStart()
+        updateUi()
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        updateUi()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        updateUi()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        viewModel.onAppUser(id , false)
+    }
+
+
 }

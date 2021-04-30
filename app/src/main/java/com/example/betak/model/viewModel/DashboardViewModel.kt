@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.example.betak.model.entity.Chat
 import com.example.betak.model.entity.Employee
 import com.example.betak.model.entity.Noti
+import com.example.betak.model.utils.Offline
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -16,8 +17,12 @@ import kotlinx.coroutines.withContext
 
 class DashboardViewModel : ViewModel() {
 
-    var notiRef = FirebaseFirestore.getInstance().collection("Notifications")
-    var employeeRef = FirebaseFirestore.getInstance().collection("Employees")
+    init {
+        Offline.setUp()
+    }
+
+    var notiRef = Offline.db.collection("Notifications")
+    var employeeRef = Offline.db.collection("Employees")
 
     var _notes = MutableLiveData<List<Noti>>()
     val notes: LiveData<List<Noti>>
@@ -45,7 +50,7 @@ class DashboardViewModel : ViewModel() {
 
     }
 
-    suspend fun getNotification(id : String ){
+    suspend fun getNotification(id : String){
         Log.e("shaima" , "start get notes ")
 
         val arrayList : ArrayList<Noti> = ArrayList()
@@ -76,6 +81,15 @@ class DashboardViewModel : ViewModel() {
         }
         withContext(Dispatchers.Main){
             _open.value = arrayList
+        }
+    }
+
+    fun onAppUser(id: String, onApp: Boolean) {
+        val map = mapOf("onApp" to onApp)
+
+        GlobalScope.launch(Dispatchers.IO) {
+            employeeRef.document(id).update(map).await()
+
         }
     }
 

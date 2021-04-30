@@ -1,5 +1,6 @@
 package com.example.betak.model.viewModel
 
+import android.text.format.DateUtils
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -7,36 +8,46 @@ import androidx.lifecycle.ViewModel
 import com.example.betak.model.entity.Chat
 import com.example.betak.model.entity.Employee
 import com.example.betak.model.entity.Noti
-import com.example.betak.model.fcm.FcmCommon
 import com.example.betak.model.fcm.FcmResponse
 import com.example.betak.model.fcm.FcmSendData
 import com.example.betak.model.fcm.MyToken
+import com.example.betak.model.utils.Offline
 import com.example.betak.repository.fcm.IfcmApi
 import com.example.betak.repository.fcm.RetrofitClient
-import com.google.android.gms.common.internal.service.Common
 import com.google.firebase.Timestamp
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.coroutines.*
+import com.google.firebase.firestore.Query
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.time.Duration
-import java.util.concurrent.Executors
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class ChatViewModel : ViewModel() {
 
 
+    init {
+        Offline.setUp()
+    }
+
     private val TAG = "ChatViewModel"
-    private val currentTime = System.currentTimeMillis()
 
     var apiInterface = RetrofitClient.retrofit.create(IfcmApi::class.java)
 
-    var tokenRef = FirebaseFirestore.getInstance().collection("Tokens")
-    var messageRef = FirebaseFirestore.getInstance().collection("Messages")
-    var employeeRef = FirebaseFirestore.getInstance().collection("Employees")
-    var notiRef = FirebaseFirestore.getInstance().collection("Notifications")
+    var tokenRef = Offline.db.collection("Tokens")
+    var messageRef = Offline.db.collection("Messages")
+    var employeeRef = Offline.db.collection("Employees")
+    var notiRef = Offline.db.collection("Notifications")
+
+    var mAuth = FirebaseAuth.getInstance()
+    var uid = mAuth.currentUser!!.uid
 
     var _chats = MutableLiveData<List<Chat>>()
     val chats: LiveData<List<Chat>>
@@ -57,9 +68,11 @@ class ChatViewModel : ViewModel() {
 
 
     suspend fun addNewMessage(
-            senderId: String, receiverId: String
-            , sender: String, receiver: String,
-            message: String, timestamp: Timestamp
+        currentTime: Long,
+        time: Date,
+        senderId: String, receiverId: String
+        , sender: String, receiver: String,
+        message: String, timestamp: Timestamp
     ) {
         var sendTo = Employee()
         var currentUser = Employee()
@@ -88,28 +101,29 @@ class ChatViewModel : ViewModel() {
             }
         }
         GlobalScope.launch {
+
+            val doc =  messageRef.document()
             val chat = Chat(
-                    sender, senderId, receiverId, receiver, message,
-                    timestamp
-            )
+                sendTo.getName()!!, sendTo.getImagePath() ,
+                senderId, receiverId, sender, message, timestamp , false
+                , doc.id , time , currentTime , false)
 
-            messageRef.document(receiverId).collection("chat").document()
-                    .set(chat).addOnSuccessListener {
-                        Log.e(TAG, "success add message ")
+            doc.set(chat).addOnSuccessListener {
+                Log.e(TAG, "success add message ")
 
-                    }.addOnFailureListener {
-                        Log.e(TAG, it.message.toString())
-                    }
+            }.addOnFailureListener {
+                Log.e(TAG, it.message.toString())
+            }
         }
-
         if (sendTo.getOnline() == false) {
             saveNotification(receiverId, currentTime, sendTo, currentUser, senderId, message, token)
         }
+        }
 
-    }
 
 
-    suspend fun saveNotification(
+
+       fun saveNotification(
             receiverId: String,
             currentTime: Long,
             sendTo: Employee,
@@ -159,16 +173,19 @@ class ChatViewModel : ViewModel() {
 
     }
 
+
     suspend fun getAllMessages(id: String) {
-        Log.e("shaima", "start get all messsages ")
+        Log.e("shaima", "start get me messsages ")
 
         val arrayList: ArrayList<Chat> = ArrayList()
 
         withContext(Dispatchers.IO) {
-            val messages = messageRef.document(id).collection("chat").orderBy("timestamp")
-            messages.get().await().forEach {
+           val getted =  messageRef.orderBy("timeStamp" , Query.Direction.ASCENDING).get().await()
+                   getted.forEach {
                 val chat = it.toObject(Chat::class.java)
-                arrayList.add(chat)
+                if((chat.getSenderId()==uid && chat.getReceiverId()==id) || (chat.getSenderId()==id && chat.getReceiverId()== uid)){
+                    arrayList.add(chat)
+                }
             }
         }
         withContext(Dispatchers.Main) {
@@ -177,5 +194,46 @@ class ChatViewModel : ViewModel() {
 
     }
 
+   suspend fun updateSeenMessages(id: String) {
+        withContext(Dispatchers.IO) {
+            val getted =  messageRef.get().await()
+            getted.forEach {
+                val docId = it.id
+                val chat = it.toObject(Chat::class.java)
+                 if(chat.getReceiverId().equals(uid) && chat.getSenderId().equals(id)){
+                   val map = mapOf("seen" to true)
+                   messageRef.document(docId).update(map)
+                 }
+            }
+        }
+    }
 
+    suspend fun updateStartDateMessages() {
+        val dates  : ArrayList<String> = ArrayList()
+
+        withContext(Dispatchers.IO) {
+            val getted =  messageRef.orderBy("timeStamp" , Query.Direction.ASCENDING).get().await()
+            getted.forEach {
+                val docId = it.id
+                val chat = it.toObject(Chat::class.java)
+
+          val date = DateUtils.getRelativeTimeSpanString(chat.getCurrentTime(),
+          System.currentTimeMillis() , DateUtils.DAY_IN_MILLIS).toString()
+
+                var map = mapOf("ok" to true)
+
+                    if (!dates.contains(date) && chat.getOk()==false){
+
+                        dates.add(date)
+                        messageRef.document(docId).update(map)
+
+                    }else{
+                         map = mapOf("ok" to false)
+                         messageRef.document(docId).update(map)
+
+                    }
+
+            }
+        }
+    }
 }

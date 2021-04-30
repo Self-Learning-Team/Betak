@@ -13,13 +13,16 @@ class Employee() : Serializable {
     private var governator: String? =null
     private var area: String? = null
     private var online : Boolean = false
+    private var onApp : Boolean = false
 
- /*   constructor( name: String , imagePath:String):this(){
+
+    /*   constructor( name: String , imagePath:String):this(){
         this.name =name
         this.imagePath = imagePath
     }*/
  constructor(id:String , name: String , job: String , phone: String , whatsApp: String ,
-             governator: String , area: String , imagePath:String , online: Boolean):this(){
+             governator: String , area: String ,
+             imagePath:String , online: Boolean , onApp: Boolean):this(){
      this.area=area
      this.name =name
      this.governator=governator
@@ -29,6 +32,7 @@ class Employee() : Serializable {
      this.job=job
      this.imagePath = imagePath
      this.online = online
+     this.onApp=onApp
  }
 
 
@@ -97,8 +101,16 @@ class Employee() : Serializable {
     fun getOnline(): Boolean {
         return online
     }
-
     fun setOnline(online: Boolean) {
         this.online = online
     }
+
+    fun setOnApp(onApp: Boolean) {
+        this.onApp = onApp
+    }
+    fun getOnApp(): Boolean {
+        return onApp
+    }
+
+
 }

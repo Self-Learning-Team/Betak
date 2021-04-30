@@ -18,8 +18,8 @@ class FilterActivity : AppCompatActivity() {
     private lateinit var binding :  ActivityFilterBinding
 
     private var job : String = "ممرضة"
-    private var area : String ="الاسكندرية"
-    private var governator : String="المنتزه"
+    private var governator : String ="الاسكندرية"
+    private var area : String="المنتزه"
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,12 +49,12 @@ class FilterActivity : AppCompatActivity() {
 
     private fun setUpSpinners() {
 
-        var GovernatorAdapter : ArrayAdapter<String> =  ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, listGovernators);
-        GovernatorAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        var GovernatorAdapter : ArrayAdapter<String> =  ArrayAdapter<String>(this, R.layout.spinner_list, listGovernators);
+        GovernatorAdapter.setDropDownViewResource(R.layout.spinner_list);
 
 
-        var JobsAdapter : ArrayAdapter<String> =  ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, listJobs);
-        JobsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        var JobsAdapter : ArrayAdapter<String> =  ArrayAdapter<String>(this, R.layout.spinner_list, listJobs);
+        JobsAdapter.setDropDownViewResource(R.layout.spinner_list);
 
 
         binding.governatorSpinner.setAdapter(GovernatorAdapter)
@@ -81,7 +81,7 @@ class FilterActivity : AppCompatActivity() {
             }
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
 
-                getSuccessArea(this@FilterActivity , position).setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                getSuccessArea(this@FilterActivity , position).setDropDownViewResource(R.layout.spinner_list);
                 binding.areaSpinner.adapter = getSuccessArea(this@FilterActivity , position)
 
                 governator = p0!!.getItemAtPosition(position).toString() }

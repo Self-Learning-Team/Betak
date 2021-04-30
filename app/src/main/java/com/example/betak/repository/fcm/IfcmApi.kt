@@ -7,7 +7,7 @@ import retrofit2.http.*
 
 interface IfcmApi {
 
-    @Headers(*["Content-Type:application/json", "Authorization:key=AAAAjaBpksw:APA91bHrvW9kvWVC-N0-Zk89uDenPQNU2G06NZhWTrvbi7eXzj1-fjboJTJz_psh_hKTUiamy4s1HPfYYZ6p3omCl2Jnw8VvscMVSW7Bw7-9PTZ3qzP0xVOHK66Wx0lvAxnqNl-_EI-c"])
+    @Headers(*["Content-Type:application/json", "Authorization:key=AAAA1yqf7IY:APA91bHxyf_QLhjbcOlKQT5zydw5Z_pJQRV16ch_UnzVah3T6c_WxopI2S3cLKCLZIRWQi-TcSFbL4swbvrQmE91yF1OsAENb22-maDTbZwuMD1mZGAfRBbx7tWtjY-P1PFT2Lb65pRT"])
     @POST("fcm/send")
     fun sendNotification(@Body body: FcmSendData): Call<FcmResponse>
 

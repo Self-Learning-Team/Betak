@@ -5,13 +5,18 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.betak.model.entity.Employee
 import com.example.betak.model.entity.Rating
+import com.example.betak.model.utils.Offline
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.*
 import kotlinx.coroutines.tasks.await
 
 class ProfileViewModel : ViewModel() {
 
-    var employeeRef = FirebaseFirestore.getInstance().collection("Employees")
+    init {
+        Offline.setUp()
+    }
+
+    var employeeRef = Offline.db.collection("Employees")
 
 
     var _emp = MutableLiveData<Employee>()

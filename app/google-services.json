@@ -1,21 +1,20 @@
 {
   "project_info": {
-    "project_number": "608281662156",
-    "firebase_url": "https://fireapp-10ba1.firebaseio.com",
-    "project_id": "fireapp-10ba1",
-    "storage_bucket": "fireapp-10ba1.appspot.com"
+    "project_number": "924133092486",
+    "project_id": "betak-5cf2e",
+    "storage_bucket": "betak-5cf2e.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:608281662156:android:03af525f1a09352bd8e869",
+        "mobilesdk_app_id": "1:924133092486:android:c2847a7844b2d28c74b507",
         "android_client_info": {
           "package_name": "com.example.betak"
         }
       },
       "oauth_client": [
         {
-          "client_id": "608281662156-dl96efcgoemme6f269dnr9c8ruogfmaj.apps.googleusercontent.com",
+          "client_id": "924133092486-u9o1ae74k35jercpmpfrfl884ggiq3mc.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.betak",
@@ -23,57 +22,20 @@
           }
         },
         {
-          "client_id": "608281662156-7fr0b0jd5gk4a7hsr606cevcenh62fi5.apps.googleusercontent.com",
+          "client_id": "924133092486-vbi35itr4gkq5ornjfb967f5d1bas72n.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyA2CjYu7quSHavVYcwrh-l3aUNaVBbS3g0"
+          "current_key": "AIzaSyBpitf7XZN8G8-OtEpUVj-p7RT08twqv_4"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "608281662156-7fr0b0jd5gk4a7hsr606cevcenh62fi5.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:608281662156:android:effadbeb2faa3547",
-        "android_client_info": {
-          "package_name": "com.google.musicplayer"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "608281662156-q8qp0o7r84pjmbh2u1up5ggk6jljh7sd.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.google.musicplayer",
-            "certificate_hash": "e40e1c23f283aecdc2f72045f606ced9c7377d89"
-          }
-        },
-        {
-          "client_id": "608281662156-7fr0b0jd5gk4a7hsr606cevcenh62fi5.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyA2CjYu7quSHavVYcwrh-l3aUNaVBbS3g0"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "608281662156-7fr0b0jd5gk4a7hsr606cevcenh62fi5.apps.googleusercontent.com",
+              "client_id": "924133092486-vbi35itr4gkq5ornjfb967f5d1bas72n.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

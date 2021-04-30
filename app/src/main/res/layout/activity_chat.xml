@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <RelativeLayout
+        android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <LinearLayout
@@ -41,17 +42,32 @@
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:src="@drawable/profile"/>
-
-                    <TextView
-                        android:id="@+id/txt_receiver"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginEnd="10dp"
-                        android:textSize="20sp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="serif-monospace"
-                        android:textColor="@android:color/white"
-                        android:text="shaimaa"/>
+                   <LinearLayout
+                       android:orientation="vertical"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content">
+                       <TextView
+                           android:id="@+id/txt_receiver"
+                           android:layout_marginStart="10dp"
+                           android:layout_marginEnd="10dp"
+                           android:textSize="20sp"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:fontFamily="serif-monospace"
+                           android:textColor="@android:color/white"
+                           android:text="shaimaa"/>
+                       <TextView
+                           android:id="@+id/txt_onApp"
+                           android:layout_marginStart="10dp"
+                           android:layout_marginEnd="10dp"
+                           android:textSize="14sp"
+                           android:visibility="gone"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:fontFamily="serif-monospace"
+                           android:textColor="@color/white"
+                           android:text="متصل الأن"/>
+                   </LinearLayout>
 
                 </LinearLayout>
             </androidx.appcompat.widget.Toolbar>
@@ -77,12 +93,14 @@
             android:id="@+id/input_message"
             android:layout_width="match_parent"
             android:layout_marginStart="10dp"
+            android:gravity="start"
             android:layout_marginBottom="10dp"
             android:layout_marginEnd="10dp"
             android:orientation="horizontal"
             android:weightSum="7"
             android:background="@drawable/background_input"
             android:layout_height="wrap_content">
+
             <ImageView
                 android:id="@+id/enter_location"
                 android:background="@color/primaryDarkColor"
@@ -93,10 +111,14 @@
             <EditText
                 android:backgroundTint="@android:color/white"
                 android:id="@+id/enter_message"
-                android:hint="Type Message--"
+                android:layout_gravity="start"
+                android:hint="ادخل رسالة"
+                android:textDirection="rtl"
+                android:layoutDirection="rtl"
                 android:inputType="textNoSuggestions"
                 android:textColor="@android:color/black"
                 android:layout_width="0dp"
+                android:textColorHint="@android:color/darker_gray"
                 android:layout_weight="5"
                 android:layout_marginEnd="5dp"
                 android:layout_marginStart="5dp"
@@ -104,6 +126,7 @@
                 />
             <ImageView
                 android:id="@+id/btn_send"
+                android:rotation="270"
                 android:src="@drawable/ic_baseline_near_me_24"
                 android:layout_width="0dp"
                 android:layout_weight="1"

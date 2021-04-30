@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 <androidx.constraintlayout.widget.ConstraintLayout
+    android:background="@android:color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.activity.EnterCodeActivity">
@@ -21,7 +22,7 @@
 
     <TextView
         android:id="@+id/txt_code"
-        app:layout_goneMarginTop="20dp"
+        app:layout_goneMarginTop="10dp"
         android:maxLines="1"
         android:text="من فضلك ادخل الكود المكون من 6 ارقام"
         android:textColor="@color/primaryDarkColor"
@@ -40,6 +41,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="50dp"
+        android:elevation="5dp"
+        app:pinBackground="@color/primaryDarkColor"
+        android:backgroundTint="@color/black"
         android:layout_centerHorizontal="true"
         android:foregroundGravity="center_horizontal"
         android:gravity="center_horizontal"
@@ -48,7 +52,7 @@
         app:pinWidth="40dp"
         app:pinHeight="40dp"
         app:pinLength="6"
-        app:cursorVisible="false"
+        app:cursorVisible="true"
         app:forceKeyboard="false"
         app:inputType="number"
         app:password="false"/>

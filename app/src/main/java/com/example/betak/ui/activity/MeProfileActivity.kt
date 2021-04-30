@@ -151,6 +151,8 @@ class MeProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
         val toolbar: Toolbar = binding.toolbar
         setSupportActionBar(toolbar)
+        toolbar.setTitle("")
+        toolbar.setSubtitle("")
 
         supportActionBar!!.elevation= 0.0F
 
@@ -226,6 +228,7 @@ class MeProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
             R.id.delete ->{
                 viewModel.deleteCurrentUser(uid)
+                mAuth.signOut()
                 val intent = Intent(this , MainActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)

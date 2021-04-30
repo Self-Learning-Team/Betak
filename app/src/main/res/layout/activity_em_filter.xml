@@ -8,6 +8,7 @@
             type="com.example.betak.model.viewModel.FilterViewModel" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:background="@android:color/white"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.activity.EmloyeesActivity">

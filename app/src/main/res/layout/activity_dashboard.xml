@@ -7,7 +7,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginBottom="20dp"
+    android:background="@color/white"
     tools:context=".ui.activity.DashboardActivity">
 
     <ScrollView
@@ -17,6 +17,7 @@
         app:layout_constraintBottom_toBottomOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:background="@android:color/white"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -64,6 +65,7 @@
                 <ImageView
                     android:id="@+id/cart_icon"
                     android:layout_centerHorizontal="true"
+                    android:backgroundTint="@android:color/white"
                     android:src="@drawable/ic_baseline_notifications_24"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
@@ -115,6 +117,8 @@
     android:layout_marginEnd="10dp"
     android:background="@null"
     android:hint="search"
+    android:textColorHint="@android:color/darker_gray"
+    android:textColor="@color/black"
     android:gravity="center_vertical"
     android:imeOptions="actionSearch"
     tools:ignore="autofill"
@@ -154,6 +158,7 @@
                        android:layout_width="match_parent"
                        android:layout_height="wrap_content"
                         android:text="مدرس"
+                       android:textColor="@android:color/black"
                        android:gravity="center"
                        android:layout_marginTop="10dp"
                        android:textSize="22sp"
@@ -187,6 +192,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="ممرضة"
+                        android:textColor="@android:color/black"
                         android:gravity="center"
                         android:layout_marginTop="10dp"
                         android:textSize="22sp"
@@ -220,6 +226,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="سباك"
+                        android:textColor="@android:color/black"
                         android:gravity="center"
                         android:layout_marginTop="10dp"
                         android:textSize="22sp"
@@ -254,6 +261,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="حداد"
+                        android:textColor="@android:color/black"
                         android:gravity="center"
                         android:layout_marginTop="10dp"
                         android:textSize="22sp"
@@ -288,6 +296,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="عامل سويتش"
+                        android:textColor="@android:color/black"
                         android:gravity="center"
                         android:layout_marginTop="10dp"
                         android:textSize="22sp"
@@ -321,6 +330,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:textColor="@android:color/black"
                         android:text="كهربائي"
                         android:gravity="center"
                         android:layout_marginTop="10dp"
@@ -357,6 +367,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="أدوات منزلية"
+                        android:textColor="@android:color/black"
                         android:gravity="center"
                         android:layout_marginTop="10dp"
                         android:textSize="22sp"
@@ -391,6 +402,7 @@
                         android:maxLines="1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:textColor="@android:color/black"
                         android:text="طباخ"
                         android:gravity="center"
                         android:layout_marginTop="10dp"
@@ -426,6 +438,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="عمال نظافة"
+                        android:textColor="@android:color/black"
                         android:gravity="center"
                         android:layout_marginTop="10dp"
                         android:textSize="22sp"
@@ -460,6 +473,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="حلاق"
+                        android:textColor="@android:color/black"
                         android:gravity="center"
                         android:layout_marginTop="10dp"
                         android:textSize="22sp"
@@ -495,6 +509,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="مربية أطفال"
+                        android:textColor="@android:color/black"
                         android:gravity="center"
                         android:layout_marginTop="10dp"
                         android:textSize="22sp"
@@ -530,6 +545,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="كوافير"
+                        android:textColor="@android:color/black"
                         android:gravity="center"
                         android:layout_marginTop="10dp"
                         android:textSize="22sp"
@@ -566,6 +582,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="عامل سيراميك"
+                        android:textColor="@android:color/black"
                         android:gravity="center"
                         android:layout_marginTop="10dp"
                         android:textSize="22sp"
@@ -601,6 +618,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="عامل دهان"
+                        android:textColor="@android:color/black"
                         android:gravity="center"
                         android:layout_marginTop="10dp"
                         android:textSize="22sp"

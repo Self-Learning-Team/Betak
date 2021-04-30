@@ -67,6 +67,8 @@
                         android:paddingStart="10dp"
                         android:paddingEnd="10dp"
                         android:textSize="18sp"
+                        android:backgroundTint="@android:color/darker_gray"
+                        android:popupBackground="@android:color/white"
                         android:textColor="@color/primaryDarkColor"
                         android:layout_width="match_parent"
                         android:layout_height="55dp" />
@@ -80,6 +82,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="41dp"
                     android:paddingStart="6dp"
+                    android:textColor="@android:color/black"
                     android:background="@android:color/white"
                     android:paddingEnd="6dp"
                     android:text="المهنة"
@@ -107,9 +110,11 @@
 
                     <Spinner
                         android:id="@+id/governator_spinner"
+                        android:backgroundTint="@android:color/darker_gray"
                         android:paddingStart="10dp"
                         android:paddingEnd="10dp"
                         android:textSize="18sp"
+                        android:popupBackground="@android:color/white"
                         android:textColor="@color/primaryDarkColor"
                         android:layout_width="match_parent"
                         android:layout_height="55dp"
@@ -124,6 +129,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="41dp"
                     android:paddingStart="6dp"
+                    android:textColor="@android:color/black"
                     android:background="@android:color/white"
                     android:paddingEnd="6dp"
                     android:text="المحافظة"
@@ -154,6 +160,8 @@
                         android:paddingStart="10dp"
                         android:paddingEnd="10dp"
                         android:textSize="18sp"
+                        android:backgroundTint="@android:color/darker_gray"
+                        android:popupBackground="@android:color/white"
                         android:textColor="@color/primaryDarkColor"
                         android:layout_width="match_parent"
                         android:layout_height="55dp" />
@@ -168,6 +176,7 @@
                     android:layout_marginStart="41dp"
                     android:paddingStart="6dp"
                     android:background="@android:color/white"
+                    android:textColor="@android:color/black"
                     android:paddingEnd="6dp"
                     android:text="المنطقة"
                     />

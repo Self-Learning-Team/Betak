@@ -2,7 +2,6 @@ package com.example.betak.ui.activity
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.app.Application
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -17,7 +16,6 @@ import com.example.betak.R
 import com.example.betak.databinding.ActivityEnterCodeBinding
 import com.example.betak.model.utils.Event
 import com.example.betak.model.viewModel.EmployeeInfoViewModel
-import com.example.betak.model.viewModel.viewModelFactory
 import com.goodiebag.pinview.Pinview
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
@@ -34,7 +32,6 @@ class EnterCodeActivity : AppCompatActivity() {
     private lateinit var codeSent: String
 
     private lateinit var viewModel: EmployeeInfoViewModel
-    private lateinit var viewModelFactory: viewModelFactory
 
     private lateinit var name: String
     private lateinit var job: String
@@ -90,9 +87,8 @@ companion object{
 
         Log.e("code is " , codeSent.toString());
 
-        viewModelFactory = viewModelFactory(applicationContext as Application)
         viewModel =
-            ViewModelProviders.of(this, viewModelFactory).get(EmployeeInfoViewModel::class.java)
+            ViewModelProviders.of(this).get(EmployeeInfoViewModel::class.java)
 
         binding.pinView.setPinViewEventListener(object : Pinview.PinViewEventListener{
             override fun onDataEntered(pinview: Pinview, fromUser: Boolean) {
@@ -169,7 +165,8 @@ companion object{
             area,
             governator,
             image,
-            online
+            online,
+            false
         )
 
     }

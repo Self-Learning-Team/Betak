@@ -18,6 +18,7 @@
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@android:color/white"
         tools:context=".ui.activity.MeProfileActivity">
 
         <com.google.android.material.appbar.AppBarLayout
@@ -40,6 +41,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@android:color/white"
             tools:context=".ui.activity.PublicProfileActivity">
 
             <ImageView
@@ -112,6 +114,7 @@
                 android:id="@+id/location"/>
             <RatingBar
                 android:id="@+id/rating_bar"
+                android:progressBackgroundTint="@android:color/darker_gray"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:rating="3"
@@ -132,11 +135,13 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/card"
                 android:layout_marginTop="10dp"
+                app:cardBackgroundColor="@android:color/white"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/rating_bar"
                 android:background="@drawable/profile_background"
                 app:cardCornerRadius="5dp"
+                android:backgroundTint="@android:color/white"
                 app:cardElevation="@dimen/cardview_compat_inset_shadow"
                 app:layout_constraintBottom_toTopOf="@+id/scrollView"
                 android:layout_marginStart="20dp"
@@ -146,6 +151,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="100dp">
                 <LinearLayout
+                    android:background="@android:color/white"
                     android:layout_height="match_parent"
                     android:layout_width="match_parent"
                     android:weightSum="2"
@@ -238,6 +244,7 @@
                                 android:id="@+id/phone"
                                 android:layout_gravity="center_vertical"
                                 android:textSize="20sp"
+                                android:textColor="@android:color/black"
                                 android:layout_marginStart="20dp"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -270,6 +277,7 @@
                                 android:id="@+id/whatsApp"
                                 android:layout_gravity="center_vertical"
                                 android:textSize="20sp"
+                                android:textColor="@android:color/black"
                                 android:layout_marginStart="20dp"
                                 android:fontFamily="serif-monospace"
                                 android:layout_width="wrap_content"
@@ -289,8 +297,10 @@
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"
         app:itemIconTint="@color/primaryDarkColor"
+        app:itemTextColor="@android:color/black"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:background="@android:color/white"
         android:layoutDirection="rtl"
         android:textDirection="rtl"
         android:fitsSystemWindows="true"

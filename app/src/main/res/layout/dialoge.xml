@@ -5,6 +5,7 @@
     android:layout_height="wrap_content">
 
     <LinearLayout
+        android:background="@android:color/white"
         android:orientation="vertical"
         android:layout_gravity="center"
         android:gravity="center"
@@ -28,6 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/rating_bar"
+            android:progressBackgroundTint="@android:color/darker_gray"
             android:numStars="5"
             android:rating="0"
             android:layout_margin="10dp"
@@ -37,19 +39,36 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/txt_opinion"
-            android:hint="قم بكتابة تقييمك"
-            android:layout_margin="10dp"
+            android:textColorHint="@android:color/darker_gray"
+            android:textColor="@android:color/black"
+            android:backgroundTint="@android:color/darker_gray"
+            android:hint="قم بكتابة تقييمك هنا"
+            android:layout_margin="10dp" />
 
-            />
     </LinearLayout>
 
     <LinearLayout
         android:orientation="horizontal"
+        android:background="@android:color/white"
         android:layout_gravity="center_horizontal"
         android:weightSum="2"
         android:layout_marginBottom="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
+        <com.google.android.material.button.MaterialButton
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:id="@+id/btn_cancel"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="15dp"
+            android:text="الرجوع"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:background="#333639"
+            android:textColor="@android:color/white"
+            />
 
         <Button
             android:id="@+id/btn_ok"
@@ -65,18 +84,6 @@
             android:textColor="@android:color/white"
             />
 
-        <com.google.android.material.button.MaterialButton
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:id="@+id/btn_cancel"
-            android:layout_gravity="center_horizontal"
-            android:layout_margin="15dp"
-            android:text="الرجوع"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:background="#333639"
-            android:textColor="@android:color/white"
-            />
+
     </LinearLayout>
 </LinearLayout>

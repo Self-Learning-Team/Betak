@@ -13,5 +13,7 @@
     <color name="colorClick">#66BCFFC5</color>
 
     <color name="actionbar_opacity">#00000000</color>
+    <color name="type_txt">#090100</color>
+    <color name="black">#000000</color>
 
 </resources>

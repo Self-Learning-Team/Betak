@@ -2,6 +2,7 @@ package com.example.betak.ui.activity
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -11,30 +12,31 @@ import com.bumptech.glide.Glide
 import com.example.betak.R
 import com.example.betak.databinding.ActivityChatBinding
 import com.example.betak.model.entity.Chat
-import com.example.betak.model.fcm.MyToken
+import com.example.betak.model.utils.Offline
 import com.example.betak.model.viewModel.ChatViewModel
 import com.example.betak.model.viewModel.DashboardViewModel
 import com.example.betak.ui.adapter.ChatAdapter
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.tasks.await
-import kotlinx.coroutines.withContext
+import java.util.*
+import kotlin.collections.ArrayList
 
 class ChatActivity : AppCompatActivity() {
+
 
     private lateinit var binding : ActivityChatBinding
     private lateinit var viewModel : ChatViewModel
     private lateinit var viewModel2 : DashboardViewModel
-
     private lateinit var chats : List<Chat>
     private lateinit var id : String
     private lateinit var mAuth : FirebaseAuth
     private lateinit var uid : String
     private lateinit var timestamp: Timestamp
+    private  lateinit var time : Date
+
+   private val currentTime = System.currentTimeMillis()
 
     @SuppressLint("SimpleDateFormat")
     override  fun onCreate(savedInstanceState: Bundle?) {
@@ -50,6 +52,9 @@ class ChatActivity : AppCompatActivity() {
 
         binding.recyclerView.smoothScrollToPosition(0);
 
+        time =  Calendar.getInstance().getTime();
+
+
         id = intent.getStringExtra("id")!!
         mAuth = FirebaseAuth.getInstance()
         uid = mAuth.currentUser!!.uid
@@ -58,12 +63,13 @@ class ChatActivity : AppCompatActivity() {
           finish()
         }
 
-
         GlobalScope.launch {
-            viewModel.getAllMessages(id)
             viewModel.getCurrentUserInfo(id)
-            viewModel2.getNotification(uid)
+            viewModel.updateStartDateMessages()
+
         }
+
+        updateMessages()
 
         viewModel.employee.observe(this , Observer {
          binding.txtReceiver.text = it.getName()
@@ -72,6 +78,14 @@ class ChatActivity : AppCompatActivity() {
                 .centerCrop()
                 .placeholder(R.drawable.profile)
                 .into(binding.imgReceiver);
+
+            // check online or not ---===---
+            if(it.getOnApp()==true){
+               binding.txtOnApp.visibility= View.VISIBLE
+            }else{
+                binding.txtOnApp.visibility= View.GONE
+
+            }
         })
 
         viewModel.chats.observe(this , androidx.lifecycle.Observer {
@@ -81,6 +95,7 @@ class ChatActivity : AppCompatActivity() {
              chats = ArrayList()
             }
             binding.recyclerView.adapter = ChatAdapter(chats)
+
         })
 
         binding.btnSend.setOnClickListener {
@@ -88,6 +103,8 @@ class ChatActivity : AppCompatActivity() {
 
          GlobalScope.launch {
          viewModel.addNewMessage(
+                 currentTime,
+                 time,
                  uid,
                  id,
                  "jjs",
@@ -95,46 +112,39 @@ class ChatActivity : AppCompatActivity() {
                  binding.enterMessage.text.toString(),
                  timestamp
              )
-             binding.enterMessage.text.clear()
              //update immediately
-             viewModel.getAllMessages(id)
+             updateMessages()
+             binding.enterMessage.text.clear()
+
              binding.recyclerView.smoothScrollToPosition(0)
-
-             //get all receiver notifications
-             viewModel2.getNotification(id)
-
          }
-
         }else{
 
          Toast.makeText(this , "لا يمكن ارسال رساله فارغة" , Toast.LENGTH_LONG).show()
         }
         }
-
-
-/*
-        binding.enterLocation.setOnClickListener {
-     //init places
-             Places.initialize(applicationContext , getString(R.string.api_key))
-
-             ///init place field list
-             var fieldList: List<Place.Field> = Arrays.asList(Place.Field.ADDRESS , Place.Field.LAT_LNG , Place.Field.NAME)
-             var intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY , fieldList).build(this)
-             startActivityForResult(intent , 100)
-        }*/
-
-
     }
 
+       fun updateMessages() {
+
+        GlobalScope.launch {
+            viewModel.updateSeenMessages(id)
+            viewModel.getAllMessages(id)
+            viewModel2.getNotification(id)
+        }
+    }
 
 
     override fun onStart() {
         viewModel.onlineUser(uid , true)
+        updateMessages()
         super.onStart()
     }
 
     override fun onResume() {
         super.onResume()
+        updateMessages()
+
         viewModel.onlineUser(uid , true)
     }
 
@@ -150,8 +160,7 @@ class ChatActivity : AppCompatActivity() {
     override fun onStop() {
         viewModel.onlineUser(uid , false)
         GlobalScope.launch {
-            viewModel2.getNotification(uid)
-
+        viewModel2.getNotification(uid)
         }
         super.onStop()
     }
@@ -165,3 +174,13 @@ class ChatActivity : AppCompatActivity() {
         super.onDestroy()
     }
 }
+/*
+        binding.enterLocation.setOnClickListener {
+     //init places
+             Places.initialize(applicationContext , getString(R.string.api_key))
+
+             ///init place field list
+             var fieldList: List<Place.Field> = Arrays.asList(Place.Field.ADDRESS , Place.Field.LAT_LNG , Place.Field.NAME)
+             var intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY , fieldList).build(this)
+             startActivityForResult(intent , 100)
+        }*/

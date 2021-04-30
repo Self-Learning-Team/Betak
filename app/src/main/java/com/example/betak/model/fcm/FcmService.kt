@@ -11,7 +11,7 @@ class FcmService : FirebaseMessagingService() {
 
     override fun onNewToken(newToken : String) {
         super.onNewToken(newToken)
-        FcmCommon.updateToken(newToken);
+//        FcmCommon.updateToken(newToken);
     }
 
 

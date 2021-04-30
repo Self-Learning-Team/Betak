@@ -7,7 +7,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/white"
+        android:background="@color/white"
         tools:context=".ui.activity.SignUpActivity">
 
         <LinearLayout
@@ -96,6 +96,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="41dp"
                     android:paddingStart="6dp"
+                    android:textColor="@android:color/black"
                     android:background="@android:color/white"
                     android:paddingEnd="6dp"
                     android:text="الأسم"
@@ -130,6 +131,8 @@
                         android:paddingStart="10dp"
                         android:paddingEnd="10dp"
                         android:textSize="18sp"
+                        android:backgroundTint="@android:color/darker_gray"
+                        android:popupBackground="@android:color/white"
                         android:textColor="@color/primaryDarkColor"
                         android:layout_width="match_parent"
                         android:layout_height="55dp" />
@@ -143,6 +146,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="41dp"
                     android:paddingStart="6dp"
+                    android:textColor="@android:color/black"
                     android:background="@android:color/white"
                     android:paddingEnd="6dp"
                     android:text="المهنة"
@@ -197,6 +201,7 @@
                     android:layout_marginStart="41dp"
                     android:paddingStart="6dp"
                     android:background="@android:color/white"
+                    android:textColor="@android:color/black"
                     android:paddingEnd="6dp"
                     android:text="رقم التليفون"
                     />
@@ -248,6 +253,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="41dp"
                     android:paddingStart="6dp"
+                    android:textColor="@android:color/black"
                     android:background="@android:color/white"
                     android:paddingEnd="6dp"
                     android:text="رقم الواتساب"
@@ -275,6 +281,8 @@
                         android:paddingStart="10dp"
                         android:paddingEnd="10dp"
                         android:textSize="18sp"
+                        android:backgroundTint="@android:color/darker_gray"
+                        android:popupBackground="@android:color/white"
                         android:textColor="@color/primaryDarkColor"
                         android:layout_width="match_parent"
                         android:layout_height="55dp"
@@ -289,6 +297,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="41dp"
                     android:paddingStart="6dp"
+                    android:textColor="@android:color/black"
                     android:background="@android:color/white"
                     android:paddingEnd="6dp"
                     android:text="المحافظة"
@@ -318,6 +327,8 @@
                         android:paddingStart="10dp"
                         android:paddingEnd="10dp"
                         android:textSize="18sp"
+                        android:backgroundTint="@android:color/darker_gray"
+                        android:popupBackground="@android:color/white"
                         android:textColor="@color/primaryDarkColor"
                         android:layout_width="match_parent"
                         android:layout_height="55dp" />
@@ -331,6 +342,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="41dp"
                     android:paddingStart="6dp"
+                    android:textColor="@android:color/black"
                     android:background="@android:color/white"
                     android:paddingEnd="6dp"
                     android:text="المنطقة"

@@ -30,8 +30,8 @@ class EmFilterActivity : AppCompatActivity() {
         viewModel = ViewModelProviders.of(this).get(FilterViewModel::class.java)
 
        var job = intent.getStringExtra("job")
-       var governator=  intent.getStringExtra("area")
-       var area =  intent.getStringExtra("governator")
+       var governator=  intent.getStringExtra("governator")
+       var area =  intent.getStringExtra("area")
 
         binding.recyclerView.startLayoutAnimation()
 

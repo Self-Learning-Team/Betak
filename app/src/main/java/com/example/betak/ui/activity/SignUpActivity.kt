@@ -16,6 +16,7 @@ import androidx.databinding.DataBindingUtil
 import com.example.betak.R
 import com.example.betak.databinding.ActivitySignUpBinding
 import com.example.betak.model.utils.getSuccessArea
+import com.example.betak.model.utils.listAlex
 import com.example.betak.model.utils.listGovernators
 import com.example.betak.model.utils.listJobs
 import com.google.firebase.FirebaseException
@@ -42,8 +43,8 @@ class SignUpActivity : AppCompatActivity() {
     private var mCallbacks: OnVerificationStateChangedCallbacks? = null
 
     private var job: String = "ممرضة"
-    private var area: String = "الاسكندرية"
-    private var governator: String = "المنتزه"
+    private var area: String = "المنتزه"
+    private var governator: String = "الاسكندرية"
 
     private lateinit var dialoge: AlertDialog
 
@@ -132,17 +133,27 @@ class SignUpActivity : AppCompatActivity() {
 
     private fun setUpSpinners() {
 
-        var GovernatorAdapter: ArrayAdapter<String> =
-            ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, listGovernators);
-        GovernatorAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        var AreaAdapter: ArrayAdapter<String> =
+                ArrayAdapter<String>(this, R.layout.spinner_list, listAlex);
 
+        AreaAdapter.setDropDownViewResource(R.layout.spinner_list);
 
         var JobsAdapter: ArrayAdapter<String> =
-            ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, listJobs);
-        JobsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            ArrayAdapter<String>(this, R.layout.spinner_list, listJobs);
+        JobsAdapter.setDropDownViewResource(R.layout.spinner_list);
+        binding.jobsSpinner.adapter = JobsAdapter
+        binding.jobsSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+            }
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                job = p0?.getItemAtPosition(p2).toString()
+            } }
 
 
-        binding.governatorSpinner.setAdapter(GovernatorAdapter)
+        val GovernatorAdapter: ArrayAdapter<String> =
+                ArrayAdapter<String>(this, R.layout.spinner_list, listGovernators);
+        GovernatorAdapter.setDropDownViewResource(R.layout.spinner_list);
+        binding.governatorSpinner.adapter= GovernatorAdapter
         binding.governatorSpinner.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -150,22 +161,15 @@ class SignUpActivity : AppCompatActivity() {
 
                 override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                     governator = p0?.getItemAtPosition(p2).toString()
+
+                    AreaAdapter= getSuccessArea(this@SignUpActivity, p2)
+                    AreaAdapter.setDropDownViewResource(R.layout.spinner_list);
+                    binding.areaSpinner.adapter = AreaAdapter
                 }
             }
 
-        binding.jobsSpinner.adapter = JobsAdapter
-        binding.jobsSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(p0: AdapterView<*>?) {
-            }
 
-            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                job = p0?.getItemAtPosition(p2).toString()
-            }
-
-        }
-
-
-        binding.governatorSpinner.onItemSelectedListener =
+        binding.areaSpinner.onItemSelectedListener =
             (object : AdapterView.OnItemSelectedListener {
                 override fun onNothingSelected(p0: AdapterView<*>?) {
                 }
@@ -176,12 +180,6 @@ class SignUpActivity : AppCompatActivity() {
                     position: Int,
                     p3: Long
                 ) {
-
-                    getSuccessArea(
-                        this@SignUpActivity,
-                        position
-                    ).setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    binding.areaSpinner.adapter = getSuccessArea(this@SignUpActivity, position)
 
                     area = p0?.getItemAtPosition(position).toString()
 

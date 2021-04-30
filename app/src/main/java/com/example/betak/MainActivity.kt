@@ -13,9 +13,11 @@ import androidx.viewpager2.widget.ViewPager2
 import com.example.betak.databinding.ActivityMainBinding
 import com.example.betak.model.entity.IntroSlide
 import com.example.betak.ui.activity.DashboardActivity
+import com.example.betak.ui.activity.NotificationActivity
 import com.example.betak.ui.activity.SignUpActivity
 import com.example.betak.ui.adapter.IntroSliderAdapter
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 
 class MainActivity : AppCompatActivity() {
 
@@ -56,9 +58,8 @@ class MainActivity : AppCompatActivity() {
 
             }
 
-
         if (FirebaseAuth.getInstance().currentUser!=null){
-           var intent = Intent(this , DashboardActivity::class.java)
+            val intent = Intent(this , DashboardActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
             startActivity(intent)
